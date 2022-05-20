@@ -22,29 +22,29 @@ import javax.swing.table.TableColumnModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.senai.manutencaosenaiapi.entity.Peca;
-import br.com.senai.manutencaosenaiapi.service.PecaService;
-import br.com.senai.manutencaosenaiapi.view.table.PecaTableModel;
+import br.com.senai.manutencaosenaiapi.entity.TipoDePeca;
+import br.com.senai.manutencaosenaiapi.service.TipoDePecaService;
+import br.com.senai.manutencaosenaiapi.view.table.TipoTableModel;
 
 @Component
-public class TelaConsultaDePeca extends JFrame {
+public class TelaConsultaTipoPeca extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edtFiltro;
 	private JTable table;
 	@Autowired
-	private PecaService service;
+	private TipoDePecaService service;
 	@Autowired
-	private TelaCadastroDePeca telaDeCadastro;
+	private TelaCadastroTipoPeca telaDeCadastro;
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaConsultaDePeca() {
-		setTitle("Tela de Consulta de Peça");
+	public TelaConsultaTipoPeca() {
+		setTitle("Tela de Consulta de Tipo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 520, 400);
+		setBounds(100, 100, 589, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,13 +57,12 @@ public class TelaConsultaDePeca extends JFrame {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Peca> pecas = service.listarPor(edtFiltro.getText());
-				PecaTableModel model = new PecaTableModel(pecas);
+				List<TipoDePeca> pecas = service.listarPor(edtFiltro.getText());
+				TipoTableModel model = new TipoTableModel(pecas);
 				table.setModel(model);
 				TableColumnModel cm = table.getColumnModel();
 				cm.getColumn(0).setPreferredWidth(50);
-				cm.getColumn(1).setPreferredWidth(470);
-				cm.getColumn(2).setPreferredWidth(80);
+				cm.getColumn(1).setPreferredWidth(550);
 				table.updateUI();
 			}
 		});
@@ -81,40 +80,48 @@ public class TelaConsultaDePeca extends JFrame {
 		table.setFillsViewportHeight(true);
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "A\u00E7\u00F5es para a linha selecionada", TitledBorder.LEADING,
+		panel.setBorder(new TitledBorder(null, "Ações para a linha selecionada", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(
-				Alignment.TRAILING,
-				gl_contentPane.createSequentialGroup().addContainerGap().addGroup(gl_contentPane
-						.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-						.addComponent(lblFiltro, Alignment.LEADING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-								.addComponent(edtFiltro, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnPesquisar)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnAdicionar)))
-						.addContainerGap()));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addComponent(lblFiltro).addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(edtFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPesquisar).addComponent(btnAdicionar))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+						.addComponent(lblFiltro)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(edtFiltro, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnPesquisar)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAdicionar))
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(lblFiltro)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(edtFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnPesquisar)
+						.addComponent(btnAdicionar))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int linhaSelecionada = table.getSelectedRow();
-				PecaTableModel model = (PecaTableModel) table.getModel();
-				Peca pecaSelecionada = model.getPor(linhaSelecionada);
-				telaDeCadastro.colocarEmEdicao(pecaSelecionada);
+				TipoTableModel model = (TipoTableModel) table.getModel();
+				TipoDePeca tipoSelecionado = model.getPor(linhaSelecionada);
+				telaDeCadastro.colocarEmEdicao(tipoSelecionado);
 				telaDeCadastro.setVisible(true);
 				setVisible(false);
 			}
@@ -124,12 +131,12 @@ public class TelaConsultaDePeca extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int linhaSelecionada = table.getSelectedRow();
-				PecaTableModel model = (PecaTableModel) table.getModel();
-				Peca pecaSalva = model.getPor(linhaSelecionada);
+				TipoTableModel model = (TipoTableModel) table.getModel();
+				TipoDePeca pecaSalva = model.getPor(linhaSelecionada);
 				service.removerPor(pecaSalva.getId());
 				model.removerPor(linhaSelecionada);
 				table.updateUI();
-				JOptionPane.showMessageDialog(contentPane, "Peça removida com sucesso!");
+				JOptionPane.showMessageDialog(contentPane, "Tipo removido com sucesso!");
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);

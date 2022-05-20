@@ -9,13 +9,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.manutencaosenaiapi.view.TelaConsultaDePeca;
+import br.com.senai.manutencaosenaiapi.view.TelaConsultaTipoPeca;
 
 @SpringBootApplication
 public class InitApp {
 	
 	@Autowired
-	private TelaConsultaDePeca telaDeConsulta;
+	private TelaConsultaTipoPeca telaDeConsulta;
 
 	public static void main(String[] args) {
 		SpringApplicationBuilder builder = 
